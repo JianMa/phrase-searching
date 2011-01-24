@@ -1,0 +1,65 @@
+$def with(Chars, Words, settings)
+
+$var title:		Setting Page
+$var css:		setting.css
+$var js:		setting.js
+
+<form action="/setting/" method="post">
+	<table>
+		<caption>
+			Settings
+		</caption>
+		<tbody>
+			<tr>
+				<td>
+					Number of Shown Words:
+				</td>
+				<td>
+					<input type="text" name="showcount" value="$settings['showcount']" />
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					Number of Upside-down Charaters(disabled curently):
+				</td>
+				<td>
+					<input type="text" name="upsidedown" value="$settings['upsidedown']" />
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					Number of Turn-down Charaters(disabled curently):
+				</td>
+				<td>
+					<input type="text" name="turndown" value="$settings['turndown']" />
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					Word Repository(one word per line):
+				</td>
+				<td>
+					<textarea name="words">
+						Words
+						word2
+					</textarea>
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					Character Repository:
+				</td>
+				<td>
+					<textarea name="chars">
+						Chars
+					</textarea>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<input type="submit" name="save" value="Save" />
+</form>
