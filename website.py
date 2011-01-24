@@ -21,6 +21,14 @@ class Char:
 	def __init__(self, num, val):
 		self.num = num
 		self.val = val
+		self.word = None
+
+class Word:
+	def __init__(self, num, x, y, length):
+		self.num = num
+		self.x = x
+		self.y = y
+		self.chars = [None] * length
 
 
 class index:
@@ -29,37 +37,78 @@ class index:
 		return render.index()
 
 
+def isempty(x, y, length, chargrid):
+	for dy in range(length):
+		if chargrid[x][y + dy]:
+			return False
+	return True
+
+def issame(chars, x, y, chargrid):
+	wordlen = len(chars)
+	for dy in range(wordlen):
+		if chargrid[x][y + dy].num != chars[dy].num:
+			return False
+	return True
+
+def checkonce(word, chargrid, Chars):
+	CharCount = len(Chars)
+	
+	for i in range(GridN):
+		for j in range(GridN - len(word.chars)):
+			if (word.x != i or word.y != j) and issame(word.chars, i, j, chargrid):
+				while True:
+					charnum = random.randrange(0, CharCount)
+					if charnum != chargrid[i][j].num:
+						break
+				chargrid[i][j] = Char(charnum, Chars[charnum])
+
+
 class main:
 	"""shows Chinese character phrase search game"""
 	def GET(self):
 		charsfile = open('./static/json/characters.json', 'r').read()
 		Chars = json.loads(charsfile, 'gbk')
-		CountChar = len(Chars)
+		CharCount = len(Chars)
 		
 		wordsfile = open('./static/json/phrases.json', 'r').read()
 		Words = json.loads(wordsfile, 'gbk')
-		CountWord = len(Words)
-		CountShow = 3
+		WordCount = len(Words)
+		ShowCount = 3
 		
 		chargrid = [[None] * GridN for i in range(GridN)]
-		words = [None] * CountShow
-		used = [False] * CountWord
+		words = [None] * ShowCount
+		isnew = [True] * WordCount
 		
-		for i in range(CountShow):
-			wordnum = random.randrange(0, CountWord)
-			while used[wordnum]:
-				wordnum = random.randrange(0, CountWord)
-			else:
-				used[wordnum] = True
-				words[i] = [None] * len(Words[wordnum])
-				for j, charval in enumerate(Words[wordnum]):
-					charnum = Chars.index(charval)
-					words[i][j] = Char(charnum, charval)
+		for i in range(ShowCount):
+			while True:
+				wordnum = random.randrange(0, WordCount)
+				if isnew[wordnum]:
+					break
+			
+			isnew[wordnum] = False
+			# find a place to put word in chargrid
+			wordlen = len(Words[wordnum])
+			while True:
+				x, y = random.randrange(0, GridN), random.randrange(0, GridN - wordlen)
+				if isempty(x, y, wordlen, chargrid):
+					break
+			
+			words[i] = Word(wordnum, x, y, wordlen) 
+			for j, charval in enumerate(Words[wordnum]):
+				charnum = Chars.index(charval)
+				words[i].chars[j] = Char(charnum, charval)
+				chargrid[x][y + j] = words[i].chars[j]
+				words[i].chars[j].word = words[i]
 		
 		for i in range(GridN):
 			for j in range(GridN):
-				charnum = random.randrange(0, CountChar)
-				chargrid[i][j] = Char(charnum, Chars[charnum])
+				if not chargrid[i][j]:
+					charnum = random.randrange(0, CharCount)
+					chargrid[i][j] = Char(charnum, Chars[charnum])
+		
+		# avoid word to appear twice in chargrid
+		for word in words:
+			checkonce(word, chargrid, Chars)
 		
 		return render.main(words, chargrid)
 

@@ -7,15 +7,35 @@ $var js:		main.js
 $# display an 8x8 grid
 
 <div id="words">
-	<ol>
-	$for word in words:
-		<li class="word">
-		$for char in word:
-			<span class="char" char="$:char.num">
-				$:char.val
-			</span>
-		</li>
-	</ol>
+	<table>
+		<tbody>
+		$for word in words:
+			<tr class="word">
+				<td class="wordindex" wordnum="$:word.num">
+					$loop.index
+				</td>
+			$for char in word.chars:
+				<td class="char" charnum="$:char.num" wordnum="$:word.num">
+					$:char.val
+				</td>
+			</tr>
+		</tbody>
+	</table>
+$#	<ol>
+$#	$for word in words:
+$#		<li class="word" wordnum="$:word.num">
+$#			<table>
+$#				<tbody>
+$#					<tr>
+$#					$for char in word.chars:
+$#						<td class="char" charnum="$:char.num" wordnum="$:word.num">
+$#							$:char.val
+$#						</td>
+$#					</tr>
+$#				</tbody>
+$#			</table>
+$#		</li>
+$#	</ol>
 </div>
 
 <div id="chars">
@@ -43,7 +63,8 @@ $# display an 8x8 grid
 				</td>
 				
 			$for j in range(GridN):
-				<td class="char" char="$:chargrid[i][j].num">
+				$ wordnum = "wordnum=%s" % chargrid[i][j].word.num if chargrid[i][j].word else ""
+				<td class="char" charnum="$:chargrid[i][j].num" $:wordnum>
 					$:chargrid[i][j].val
 				</td>
 			</tr>
