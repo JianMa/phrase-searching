@@ -36,6 +36,17 @@ class index:
 	def GET(self):
 		return render.index()
 
+def GetAllFromJson():
+	charsfile = open('./static/json/characters.json', 'r').read()
+	Chars = json.loads(charsfile, 'gbk')
+	
+	wordsfile = open('./static/json/phrases.json', 'r').read()
+	Words = json.loads(wordsfile, 'gbk')
+	
+	settingsfile = open('./static/json/settings.json', 'r').read()
+	settings = json.loads(settingsfile)
+	
+	return Chars, Words, settings
 
 def isempty(x, y, length, chargrid):
 	for dy in range(length):
@@ -66,14 +77,11 @@ def checkonce(word, chargrid, Chars):
 class main:
 	"""shows Chinese character phrase search game"""
 	def GET(self):
-		charsfile = open('./static/json/characters.json', 'r').read()
-		Chars = json.loads(charsfile, 'gbk')
-		CharCount = len(Chars)
+		Chars, Words, settings = GetAllFromJson()
 		
-		wordsfile = open('./static/json/phrases.json', 'r').read()
-		Words = json.loads(wordsfile, 'gbk')
+		CharCount = len(Chars)
 		WordCount = len(Words)
-		ShowCount = 3
+		ShowCount = settings["showcount"]
 		
 		chargrid = [[None] * GridN for i in range(GridN)]
 		words = [None] * ShowCount
@@ -116,7 +124,8 @@ class main:
 class setting:
 	"""allows user to make settings"""
 	def GET(self):
-		return render.setting()
+		Chars, Words, settings = GetAllFromJson()
+		return render.setting(Chars, Words, settings)
 	
 	def POST(self):
 		return render.setting()
