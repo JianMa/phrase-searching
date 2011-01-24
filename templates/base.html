@@ -1,0 +1,37 @@
+$def with(content)
+
+$# code only works in webpy v0.34
+$code:
+	cssFiles = [u'default.css']
+	cssFiles.extend(content.css.split())
+	jsFiles = [u'jquery/1.4.4.min.js']
+	jsFiles.extend(content.js.split())
+
+<html>
+	<head>
+		<title> $content.title </title>
+	$for cssFile in cssFiles:
+		<link rel="stylesheet" type="text/css" href="/static/css/$cssFile">
+	</head>
+	
+	<body>
+		<div id="header">
+			<h1> Phrase Searching </h1>
+			$if content.title != "Index":
+				<a href="/"> Go to Index Page </a>
+			<hr />
+		</div>
+		
+		<div id="content">
+			$:content
+		</div>
+		
+		<div id="footer">
+			<hr />
+			Copyright &copy; 2011 Jian Ma
+		</div>
+	</body>
+	
+$for jsFile in jsFiles:
+	<script type="text/javascript" src="/static/js/$jsFile"></script>
+</html>

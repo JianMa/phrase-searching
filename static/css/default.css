@@ -1,0 +1,24 @@
+* {
+	font-family: Helvetica, Arial, sans-serif;
+	text-align: center;
+}
+
+body {
+	width: 1000px;
+	margin: 50px auto;
+}
+
+div#header {
+	width: 100%;
+}
+
+div#content {
+	width: 100%;
+	margin: 20px auto;
+	height: auto;
+}
+
+div#footer {
+	width: 100%;
+	margin: 20px auto;
+}

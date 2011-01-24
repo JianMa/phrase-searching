@@ -1,0 +1,13 @@
+div#words,
+div#chars {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+div#words {
+	width: 34%;
+}
+
+div#chars {
+	width: 65%;
+}
