@@ -27,6 +27,10 @@ div#chars table td.char {
 	border: 1px black solid;
 }
 
-div#chars table td.char.highlight {
+div#chars table td.char:hover {
+	cursor: default;
+}
+
+.char.highlight {
 	background-color: green;
 }

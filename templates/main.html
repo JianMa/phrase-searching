@@ -1,4 +1,4 @@
-$def with(words, chars, chnum)
+$def with(words, chargrid)
 
 $var title:		Main Page
 $var css:		main.css
@@ -9,7 +9,12 @@ $# display an 8x8 grid
 <div id="words">
 	<ol>
 	$for word in words:
-		<li class="word"> $:word </li>
+		<li class="word">
+		$for char in word:
+			<span class="char" char="$:char.num">
+				$:char.val
+			</span>
+		</li>
 	</ol>
 </div>
 
@@ -38,8 +43,8 @@ $# display an 8x8 grid
 				</td>
 				
 			$for j in range(GridN):
-				<td class="char" char="$:chnum[i][j]">
-					$:chars[i][j]
+				<td class="char" char="$:chargrid[i][j].num">
+					$:chargrid[i][j].val
 				</td>
 			</tr>
 		</tbody>
