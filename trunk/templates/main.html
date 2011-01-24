@@ -1,4 +1,4 @@
-$def with(words, chars)
+$def with(words, chars, chnum)
 
 $var title:		Main Page
 $var css:		main.css
@@ -7,23 +7,38 @@ $var js:		main.js
 $# display an 8x8 grid
 
 <div id="words">
-	<ol class="word">
+	<ol>
 	$for word in words:
-		<li> $:word </li>
+		<li class="word"> $:word </li>
 	</ol>
 </div>
 
 <div id="chars">
 	<table>
 		<caption>
-			Find the word in this grid
+			Find the words in grid
 		</caption>
 		
 		<tbody>
+			<tr>
+				<td>
+				</td>
+			$for j in range(GridN):
+				$# column are labled from 1 to 8
+				<td class="coordinate">
+					$(j + 1)
+				</td>
+			</tr>
+			
 		$for i in range(GridN):
 			<tr>
+			$# rows are labled from A to H
+				<td class="coordinate">
+					$(chr(ord('A') + i))
+				</td>
+				
 			$for j in range(GridN):
-				<td class="char">
+				<td class="char" char="$:chnum[i][j]">
 					$:chars[i][j]
 				</td>
 			</tr>
