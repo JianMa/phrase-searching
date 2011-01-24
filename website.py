@@ -5,10 +5,14 @@ import random
 
 urls = (
 		r'/',			'index',
-		r'/main/',		'main'
+		r'/main/',		'main',
+		r'/setting/',	'setting'
 )
 
+GridN = 8
 g = globals()
+g['GridN'] = GridN
+
 app = web.application(urls, globals())
 render = web.template.render('templates/', globals = g, base = 'base')
 
@@ -17,8 +21,6 @@ class index:
 	def GET(self):
 		return render.index()
 
-GridN = 8
-g['GridN'] = GridN
 
 class main:
 	"""shows Chinese character phrase search game"""
@@ -32,6 +34,7 @@ class main:
 		NumPhrase = len(Phrases)
 		numShow = 3
 		
+		chnum = [[None] * GridN for i in range(GridN)]
 		chars = [[None] * GridN for i in range(GridN)]
 		phrases = [None] * numShow
 		used = [False] * NumPhrase
@@ -46,9 +49,20 @@ class main:
 		
 		for i in range(GridN):
 			for j in range(GridN):
-				chars[i][j] = Chars[random.randrange(0, NumChar)]
+				chnum[i][j] = random.randrange(0, NumChar)
+				chars[i][j] = Chars[chnum[i][j]]
 		
-		return render.main(phrases, chars)
+		return render.main(phrases, chars, chnum)
+
+
+class setting:
+	"""allows user to make settings"""
+	def GET(self):
+		return render.setting()
+	
+	def POST(self):
+		return render.setting()
+
 
 if __name__ == '__main__':
 	app.run()

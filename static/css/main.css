@@ -5,9 +5,28 @@ div#chars {
 }
 
 div#words {
-	width: 34%;
+	width: 200px;
+}
+
+div#words ol li {
+	line-height: 40px;
 }
 
 div#chars {
-	width: 65%;
+	width: 500px;
+}
+
+div#chars table {
+	width: 380px;
+	height: 380px;
+	margin: 0px auto;
+	border-collapse: collapse;
+}
+
+div#chars table td.char {
+	border: 1px black solid;
+}
+
+div#chars table td.char.highlight {
+	background-color: green;
 }
