@@ -5,32 +5,56 @@ div#chars {
 }
 
 div#words {
-	width: 200px;
+	width: 240px;
 }
 
+div#words table {
+	border-collapse: collapse;
+}
+
+div#words table td {
+	width: 40px;
+	height: 40px;
+}
+/*
 div#words ol li {
+	margin: 10px auto;
 	line-height: 40px;
 }
 
+div#words ol li table {
+	border-collapse: collapse;
+}
+
+div#words ol li .char {
+	width: 40px;
+	height: 40px;
+}
+*/
 div#chars {
 	width: 500px;
 }
 
 div#chars table {
-	width: 380px;
-	height: 380px;
+//	width: 380px;
+//	height: 380px;
 	margin: 0px auto;
 	border-collapse: collapse;
 }
 
-div#chars table td.char {
+div#chars table td {
+	width: 40px;
+	height: 40px;
+}
+
+td.char {
 	border: 1px black solid;
 }
 
-div#chars table td.char:hover {
+td.char:hover {
 	cursor: default;
 }
 
-.char.highlight {
+td.char.highlight {
 	background-color: green;
 }

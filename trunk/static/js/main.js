@@ -1,9 +1,17 @@
 $(document).ready(function() {
-	$(".char").mouseover(function() {
-		charnum = $(this).attr("char");
-		$(".char[char=" + charnum + "]").addClass("highlight");
+	$("td.char").mouseover(function() {
+		charnum = $(this).attr("charnum");
+		$("td.char[charnum=" + charnum + "]").addClass("highlight");
 	}).mouseout(function() {
-		charnum = $(this).attr("char");
-		$(".char[char=" + charnum + "]").removeClass("highlight");
+		charnum = $(this).attr("charnum");
+		$("td.char[charnum=" + charnum + "]").removeClass("highlight");
+	});
+	
+	$("td.wordindex").mouseover(function() {
+		wordnum = $(this).attr("wordnum");
+		$("td.char[wordnum=" + wordnum + "]").addClass("highlight");
+	}).mouseout(function() {
+		wordnum = $(this).attr("wordnum");
+		$("td.char[wordnum=" + wordnum + "]").removeClass("highlight");
 	});
 });
