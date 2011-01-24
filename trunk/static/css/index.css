@@ -1,0 +1,14 @@
+table#list {
+	width: 800px;
+	margin: 0px auto;
+}
+
+table#list td.link li {
+	width: 200px;
+	text-align: left;
+}
+
+table#list td.comments {
+	width: auto;
+	text-align: left;
+}

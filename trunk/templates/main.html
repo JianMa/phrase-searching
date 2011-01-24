@@ -1,0 +1,32 @@
+$def with(words, chars)
+
+$var title:		Main Page
+$var css:		main.css
+$var js:		main.js
+
+$# display an 8x8 grid
+
+<div id="words">
+	<ol class="word">
+	$for word in words:
+		<li> $:word </li>
+	</ol>
+</div>
+
+<div id="chars">
+	<table>
+		<caption>
+			Find the word in this grid
+		</caption>
+		
+		<tbody>
+		$for i in range(GridN):
+			<tr>
+			$for j in range(GridN):
+				<td class="char">
+					$:chars[i][j]
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
