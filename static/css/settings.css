@@ -1,0 +1,23 @@
+form#settings {
+	width: 800px;
+	margin: 0px auto;
+}
+
+form#settings table td.item {
+	width: 350px;
+	padding-left: 150px;
+	text-align: left;
+}
+
+form#settings td.value {
+	width: 500px;
+	text-align: left;
+}
+
+form#settings td.value input {
+	width: 30px;
+}
+
+form#settings td.value textarea {
+	text-align: left;
+}

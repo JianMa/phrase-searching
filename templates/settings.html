@@ -1,62 +1,68 @@
 $def with(Chars, Words, settings)
 
-$var title:		Setting Page
-$var css:		setting.css
-$var js:		setting.js
+$var title:		Settings Page
+$var css:		settings.css
+$var js:		
 
-<form action="/setting/" method="post">
+<form id="settings" action="/settings/" method="post">
 	<table>
 		<caption>
-			Settings
+			<h2>
+				Settings
+			</h2>
 		</caption>
 		<tbody>
 			<tr>
-				<td>
+				<td class="item">
 					Number of Shown Words:
 				</td>
-				<td>
+				<td class="value">
 					<input type="text" name="showcount" value="$settings['showcount']" />
 				</td>
 			</tr>
 			
 			<tr>
-				<td>
-					Number of Upside-down Charaters(disabled curently):
+				<td class="item">
+					Number of Upside-down Charaters:<br />
+					(disabled currently)
 				</td>
-				<td>
+				<td class="value">
 					<input type="text" name="upsidedown" value="$settings['upsidedown']" />
 				</td>
 			</tr>
 			
 			<tr>
-				<td>
-					Number of Turn-down Charaters(disabled curently):
+				<td class="item">
+					Number of Turn-down Charaters:<br />
+					(disabled currently)
 				</td>
-				<td>
+				<td class="value">
 					<input type="text" name="turndown" value="$settings['turndown']" />
 				</td>
 			</tr>
 			
 			<tr>
-				<td>
-					Word Repository(one word per line):
+				<td class="item">
+					Word Repository:<br />
+					(one word per line)
 				</td>
-				<td>
-					<textarea name="words">
-						Words
-						word2
-					</textarea>
+				<td class="value">
+					$ wordlist = ""
+					$for word in Words:
+						$ wordlist += word + "\n"
+					<textarea name="words" rows="10" cols="10">$:wordlist</textarea>
 				</td>
 			</tr>
 			
 			<tr>
-				<td>
+				<td class="item">
 					Character Repository:
 				</td>
-				<td>
-					<textarea name="chars">
-						Chars
-					</textarea>
+				<td class="value">
+					$ charlist = ""
+					$for char in Chars:
+						$ charlist += char
+					<textarea name="chars" rows="10" cols="30">$:charlist</textarea>
 				</td>
 			</tr>
 		</tbody>

@@ -6,7 +6,7 @@ import random
 urls = (
 		r'/',			'index',
 		r'/main/',		'main',
-		r'/setting/',	'setting'
+		r'/settings/',	'settings'
 )
 
 GridN = 8
@@ -37,16 +37,27 @@ class index:
 		return render.index()
 
 def GetAllFromJson():
-	charsfile = open('./static/json/characters.json', 'r').read()
-	Chars = json.loads(charsfile, 'gbk')
+	charsfile = open('./static/json/characters.json', 'r')
+	Chars = json.loads(charsfile.read(), 'gbk')
 	
-	wordsfile = open('./static/json/phrases.json', 'r').read()
-	Words = json.loads(wordsfile, 'gbk')
+	wordsfile = open('./static/json/phrases.json', 'r')
+	Words = json.loads(wordsfile.read(), 'gbk')
 	
-	settingsfile = open('./static/json/settings.json', 'r').read()
-	settings = json.loads(settingsfile)
+	settingsfile = open('./static/json/settings.json', 'r')
+	settings = json.loads(settingsfile.read())
 	
 	return Chars, Words, settings
+
+def SetAllToJson(Chars, Words, settings):
+	charsfile = open('./static/json/characters.json', 'w')
+	charsfile.write(json.dumps(Chars, indent = 4))
+	
+	wordsfile = open('./static/json/phrases.json', 'w')
+	wordsfile.write(json.dumps(Words, indent = 4))
+	
+	settingsfile = open('./static/json/settings.json', 'w')
+	settingsfile.write(json.dumps(settings, indent = 4))
+
 
 def isempty(x, y, length, chargrid):
 	for dy in range(length):
@@ -121,14 +132,36 @@ class main:
 		return render.main(words, chargrid)
 
 
-class setting:
+class settings:
 	"""allows user to make settings"""
 	def GET(self):
 		Chars, Words, settings = GetAllFromJson()
-		return render.setting(Chars, Words, settings)
+		return render.settings(Chars, Words, settings)
 	
 	def POST(self):
-		return render.setting()
+		Chars, Words, settings = GetAllFromJson()
+		
+		charsStr = web.input(chars = "".join(Chars)).chars
+		Chars = list(charsStr)
+		
+		wordsStr = web.input(words = "\n".join(Words)).words
+		Words = wordsStr.split()
+		
+		# save for settings
+		showcountStr = web.input(showcount = settings["showcount"]).showcount
+		try:
+			showcount = int(showcountStr)
+			if 0 < showcount and showcount <= 5:
+				settings["showcount"] = showcount
+		except:
+			pass
+		
+		# upsidedown is disabled
+		# turndown is disabled
+		
+		SetAllToJson(Chars, Words, settings)
+		
+		raise web.seeother('/settings/')
 
 
 if __name__ == '__main__':
